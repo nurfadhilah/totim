@@ -1,0 +1,165 @@
+<html>
+</head>
+<title>Student</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+
+<style>
+     * {
+	box-sizing: border-box; 
+	margin: 0;
+	padding: 0;
+	font-family: Poppins, Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 14px;
+}
+main {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
+
+div.row {
+	 display: flex;
+}
+
+div.row input:nth-child(2){
+	margin-left:5px;
+}
+div.form-container {
+	align-items: left;
+	max-width:70%;
+	border: 1px solid rgb(241, 245, 246);
+	background-color: rgb(255, 255, 255);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 15px 30px;
+	padding: 1%;
+	margin-top:5%;
+}
+
+input, select {
+	width: 100%;
+	padding: 1em;
+	margin-bottom: 1em;
+	padding: 12px 19px;
+	border: 1px solid rgb(211, 221, 225);
+	border-radius: 4px;
+	background-color: rgb(255, 255, 255);
+	color: rgb(69, 85, 96);
+	transition: background-color 300ms ease-in-out 0s, color 300ms ease-in-out 0s;
+}
+button {
+	width:100%;
+	color: rgb(255, 255, 255);
+	background-color: rgb(1, 151, 236);
+	height: 38px;
+	padding: 0px 19px;
+	border:0;
+	border-radius: 4px;
+	line-height: 1;
+	user-select: none;
+	transition-duration: 200ms;
+	transition-property: color, background-color;
+	transition-timing-function: ease-in-out;
+}
+button:hover {
+	cursor: pointer;
+	background: #0354CE;
+}
+
+@media only screen and (max-width: 800px)  {
+  .row {
+     flex-direction: column;
+  }
+	div.row input:nth-child(2){
+		margin-left:0px;
+	}
+}
+
+h1.title {
+  text-align: center;
+}
+h1.title span {
+  background-color: #fff;
+  padding: 15px;
+}
+h1.title::after {
+  display: block;
+  content: "";
+  border: 1px solid #ccc;
+  margin-top: -0.5em;
+  margin-bottom:2em;
+
+.grid {
+   grid-template-columns: 1fr 3fr;
+   gap: 2rem;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+    <main>
+        <div class="form-container">
+
+            <h1 class="title"><span>Please fill your information below</span></h1>
+            <form autocomplete="off" action="" method="POST">
+             {% csrf_token %}   
+            <label for="townborn">Student ID</label>
+            <input type="text" placeholder="ID" id="id" name="id">
+            
+    
+            <label for="townborn">Student Name</label>
+            <input type="text" id="Name" name="name">
+
+            <label for="townborn">Student Email</label>
+            <input type="email" id="email" name="email">
+
+            <label for="townborn">Student Age</label>
+            <input type="number" id="age" name="age">
+
+            <label for="townborn">Student Mentor</label>
+            <select name="mentor" id="mentor">
+                {% for n in mymentor %}
+                <option value="{{n.menid}}">{{n.menid}}</option>
+                {% endfor %} 
+            </select>
+
+            <button type="submit">Submit</button>
+            <br>
+            {{message}}
+            </form>
+            <hr>
+
+            <table id="purifierTable">
+              {% for x in mystudent %}
+                <thead>
+                  <tr>
+                    <th>STUDENT ID</th>
+                    <th>STUDENT NAME</th>
+                    <th>STUDENT EMAIL</th>
+                    <th>STUDENT AGE</th>
+                    <th>STUDENT MENTOR</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                
+                <tbody>
+                  <tr>
+                    <td>{{x.stuid}}</td>
+                    <td>{{x.stuname}}</td>
+                    <td>{{x.stuemail}}</td>
+                    <td>{{x.stuage}}</td>
+                    <td>{{x.stumentor_id}}</td>
+                    <td><a href="update/{{x.stuid}}">EDIT</a>  
+                        <a href="delete/{{x.stuid}}">| DELETE</a>
+                        <a href="{% url 'searchpage' %}">| SEARCH </a>
+                      </td>
+                  </tr>
+                </tbody>
+                {% endfor %} 
+              </table>
+        </div>
+    </main>
+</body>
+
+</html>

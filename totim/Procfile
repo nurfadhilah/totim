@@ -1,0 +1,1 @@
+web : gunicorn totim.wsgi --log-file -
